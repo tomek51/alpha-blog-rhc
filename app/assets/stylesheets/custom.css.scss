@@ -15,3 +15,31 @@ $navbar-default-bg: #424242;
 .center {
     text-align : center;
 }
+.jumbotron h1 {
+    font-weight: bold;
+}
+.jumbotron {
+    background-image: asset-url('img.jpg');
+    height: 600px;
+}
+
+footer {
+    margin-top : 45px;
+    padding-top: 5px;
+    border-top: 1px solid #bfbfbf;
+    color: #808080;
+}
+
+footer small {
+    float: left;
+}
+
+footer ul {
+    float: right;
+    list-style: none;
+}
+
+footer ul li {
+    float: left;
+    margin-left: 15px;
+}
