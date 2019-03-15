@@ -1,21 +1,28 @@
-<h1>Listes des articles</h1>
+<div class="row">
+    <div class="col-xs-8 col-xs-offset-2">
+        <h1>Listes des articles</h1>
 
-<p><%=link_to "Créer un nouvel article", new_article_path%></p>
-
-<table>
-    <tr>
-        <th>Titre</th>
-        <th>Description</th>
-    </tr>
-    
-    <% @articles.each do |article| %>
-        <tr>
-            <td><%= article.title %></td>
-            <td><%= article.description %></td>
-            <td><%= link_to "Editer", edit_article_path(article) %></td>
-            <td><%= link_to "Voir", article_path(article) %></td>
-            <td><%= link_to "Supprimer", article_path(article), method: :delete %></td>
-
-        </tr>
-    <% end %>
-</table>
+        <p>
+            <%=link_to "Créer un nouvel article", new_article_path%>
+        </p>
+        
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Titre</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            
+            <% @articles.each do |article| %>
+                <tr>
+                    <td><%= link_to article.title, article_path(article) %></td>
+                    <td><%= truncate(article.description, lenght: 60) %></td>
+                    <td><%= link_to "Editer", edit_article_path(article), class: "btn btn-xs btn-primary" %>
+                    <%= link_to "Supprimer", article_path(article), method: :delete, class: "btn btn-xs btn-danger" %></td>
+                </tr>
+            <% end %>
+        </table>
+    </div>
+</div>
