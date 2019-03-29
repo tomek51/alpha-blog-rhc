@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
     def require_user
         if not logged_in?
             flash[:danger] = "Opération impossible si tu n'es pas connecté"
-            redirect_to root_path
+            redirect_to signup_path
         end
     end
 end
