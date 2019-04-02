@@ -12,6 +12,10 @@
                         <h3 class="panel-title">
                             <%= gravatar_for user, size:25 %>
                             <%= link_to user.username, user_path(user) %>
+                            <% if logged_in? and current_user.admin? %>
+                                <%= link_to "Supprimer l'utilisateur", user_path(user), method: :delete, 
+                                data: {confirm:"Êtes vous sure de vouloir supprimer l'utilisateur?"}, class: "btn btn-xs btn-danger" %> 
+                            <% end %>
                         </h3>
                     </div>
                     <div class="panel-body">

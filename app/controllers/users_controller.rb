@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
-    before_action :set_user, only: [:show, :edit, :update]
+    before_action :set_user, only: [:edit, :update, :show, :destroy]
     before_action :require_same_user, only: [:edit, :update, :destroy]
+    before_action :require_admin, only: [:destroy]
     
     def index
         @users = User.paginate(:page => params[:page], :per_page => 3)
@@ -10,7 +11,7 @@ class UsersController < ApplicationController
        @user = User.new
    end
    
-   def create 
+    def create 
        @user = User.new(user_params)
        if @user.save
            session[:user_id] = @user.id
@@ -37,20 +38,33 @@ class UsersController < ApplicationController
         @user_articles = @user.articles.paginate(:page => params[:page], :per_page => 3)
     end
     
+    def destroy
+        @user.destroy
+        flash[:success] = "Utilisateur et tous ces articles supprimés avec succès"
+        redirect_to user_path
+    end
+    
     private
     
     def set_user
         @user = User.find(params[:id])
     end
+    
     def user_params
         params.require(:user).permit(:username, :email, :password)
     end
     
     def require_same_user
-        if current_user != @user 
+        if current_user != @user and current_user.admin? == false
             flash[:danger] = "Tu ne peux pas modifier le profil d'un autre"
             redirect_to root_path
         end 
-        
+    end
+    
+    def require_admin
+        if logged_in? and current_user.admin? == false
+            flash[:danger] = "Action impossible sans être Admin"
+            redirect_to user_path
+        end
     end 
 end
